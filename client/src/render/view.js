@@ -128,6 +128,7 @@ export class GameView {
     this.M = M;
     this.me = me;
     this.vm.setTeam(me.team);
+    this.vmTeam = me.team;
   }
 
   detach() {
@@ -143,8 +144,10 @@ export class GameView {
 
   soldier(a) {
     let s = this.soldiers.get(a.id);
+    if (s && s.team !== a.team) { this.scene.remove(s.root); s.dispose(); s = null; }   // moved to the other team: new uniform
     if (!s) {
       s = this.assets.characters ? new Character(a, this.assets.characters) : new Soldier(a);
+      s.team = a.team;
       this.scene.add(s.root);
       this.soldiers.set(a.id, s);
     }
@@ -227,6 +230,7 @@ export class GameView {
       if (this.soldiers.size > M.actors.length)
         for (const [id, s] of this.soldiers) if (!M.actors.some(a => a.id === id)) { this.scene.remove(s.root); s.dispose(); this.soldiers.delete(id); }
       for (const a of M.actors) this.soldier(a).update(dt, time, a !== me || a.dead);
+      if (me.team !== this.vmTeam) { this.vm.setTeam(me.team); this.vmTeam = me.team; }
       this.syncPickups(M, dt, time);
       const w = M.weapons[me.wp[me.cur]?.id || 'ar'];
       if (!me.dead) {

@@ -11,7 +11,10 @@ const MAX_QUEUE = 30;             // buffered commands per player
 const BUDGET = 6;                 // commands a player may catch up on in one tick; refills one per tick (no speed hacks)
 const REWIND = 0.6;               // furthest back lag compensation will look (seconds)
 
-/** One room: a match that runs continuously, rotating maps, with humans joining and leaving and bots filling gaps. */
+/**
+ * One room: a match that runs continuously, rotating maps, with players joining and leaving. Online rooms are
+ * players only: the clock waits until both teams have someone, and the teams are kept within one player of each other.
+ */
 export class Room {
   constructor({ code, isPrivate, data, onResults, onEmpty }) {
     Object.assign(this, { code, isPrivate, data, onResults, onEmpty });
@@ -27,6 +30,12 @@ export class Room {
 
   get full() { return this.clients.size >= MAX_HUMANS; }
 
+  // Both teams have at least one player, so the match can run.
+  get ready() {
+    const teams = new Set(this.M.actors.map(a => a.team));
+    return teams.has('blue') && teams.has('red');
+  }
+
   newMatch() {
     const map = this.data.maps[this.mapIndex % this.data.maps.length];
     this.M = new Match(this.data, { map: map.slug, limit: this.data.match.defaultScoreLimit, difficulty: 1, lagComp: true });
@@ -34,8 +43,8 @@ export class Room {
       c.actor = this.M.addHuman(c.name, this.M.teamForNewHuman(), c.primary, c.playerId, c.optic);
       c.queue.length = 0;
     }
-    this.M.balanceBots(this.data.match.teamSize);
-    this.M.emit('start', {});
+    this.M.hold = !this.ready;
+    if (!this.M.hold) this.M.emit('start', {});
     this.intermission = 0;
     for (const c of this.clients) this.welcome(c, 'map');
   }
@@ -44,9 +53,28 @@ export class Room {
     const M = this.M;
     c.send({
       t: type, you: c.actor.id, code: this.isPrivate ? this.code : null, map: M.mapDef.slug, limit: M.limit, difficulty: M.difficulty,
-      time: M.time, left: M.left, roster: M.actors.map(rosterEntry), loadout: c.actor.loadout,
+      time: M.time, left: M.left, roster: M.actors.map(rosterEntry), loadout: c.actor.loadout, waiting: M.hold,
       over: M.over, intermission: Math.max(0, this.intermission),   // joining between matches
     });
+  }
+
+  // Start (or pause) the clock as players arrive and leave; everyone sees the start banner when it begins.
+  updateHold() {
+    const waiting = !this.ready;
+    if (waiting === this.M.hold) return;
+    this.M.hold = waiting;
+    if (!waiting) this.M.emit('start', {});
+  }
+
+  // When a leaver makes the teams uneven by two, the latest player to join the bigger team moves over and respawns there.
+  rebalance() {
+    const M = this.M, on = team => M.actors.filter(a => a.team === team);
+    for (let blue = on('blue'), red = on('red'); Math.abs(blue.length - red.length) > 1; blue = on('blue'), red = on('red')) {
+      const a = (blue.length > red.length ? blue : red).at(-1);
+      a.team = a.team === 'blue' ? 'red' : 'blue';
+      M.spawn(a);
+      M.emit('teamswap', { a, team: a.team });
+    }
   }
 
   broadcastRoster() {
@@ -59,7 +87,7 @@ export class Room {
     this.clients.add(c);
     c.room = this;
     c.actor = this.M.addHuman(c.name, this.M.teamForNewHuman(), c.primary, c.playerId, c.optic);
-    this.M.balanceBots(this.data.match.teamSize);   // a bot on that team makes room
+    this.updateHold();
     this.welcome(c);
     this.broadcastRoster();
     console.log(`room ${this.code}: ${c.name} joined (${this.clients.size} humans)`);
@@ -69,7 +97,10 @@ export class Room {
   leave(c) {
     if (!this.clients.delete(c)) return;
     if (c.actor) this.M.removeActor(c.actor);
-    this.M.balanceBots(this.data.match.teamSize);   // a bot takes the empty slot
+    if (this.intermission <= 0) {   // between matches the next map deals new teams anyway
+      this.rebalance();
+      this.updateHold();
+    }
     this.broadcastRoster();
     console.log(`room ${this.code}: ${c.name} left (${this.clients.size} humans)`);
     if (!this.clients.size) this.onEmpty(this);
@@ -127,7 +158,7 @@ export class Room {
     M.events = [];
     const shared = events.filter(e => !PERSONAL.has(e.type)).map(packEvent);
     const head = JSON.stringify({
-      t: 's', tm: Math.round(M.time * 1000) / 1000, lf: Math.round(M.left * 10) / 10, sc: [M.score.blue, M.score.red],
+      t: 's', tm: Math.round(M.time * 1000) / 1000, lf: Math.round(M.left * 10) / 10, wt: M.hold ? 1 : 0, sc: [M.score.blue, M.score.red],
       uv: [Math.ceil(M.uav.blue), Math.ceil(M.uav.red)], ac: M.actors.map(packActor), nd: M.nades.map(packNade),
       st: M.strikes.map(packStrike), pk: M.pickups.map(packPickup),
     }).slice(0, -1);

@@ -96,6 +96,9 @@ export class Hud {
           this.banner = { text: e.a === me ? text : `FRIENDLY ${text}`, sub, t: 2.8 };
         }
         break;
+      case 'teamswap':
+        if (e.a === me) this.banner = { text: 'TEAMS BALANCED', sub: `A player left · you now fight for ${e.team === 'blue' ? 'the Rangers' : 'OPFOR'}`, t: 3.6 };
+        break;
       case 'pickup':
         if (e.a === me) e.kind === 'care' ? this.popup('FULL RESUPPLY', '#7dff6e') : this.popup('+AMMO', '#c9e08a');
         break;
@@ -190,6 +193,7 @@ export class Hud {
       c.globalAlpha = 1;
     }
     if (extra.message) this.text(extra.message, cx, H * 0.3, '#ffb347', 18, 'center');
+    if (M.waiting && !M.over) this.drawWaiting(extra.code);
     if (M.time < 12) {
       c.globalAlpha = Math.min(1, 12 - M.time);
       this.text('WASD move · Mouse look · LMB fire · RMB aim · Space jump · C crouch · Shift sprint · R reload · Q swap · G frag · V knife · Tab scores',
@@ -266,6 +270,20 @@ export class Hud {
     }
   }
 
+  // Online, until both teams have a player: the clock is stopped and the room code is up for sharing.
+  drawWaiting(code) {
+    const c = this.c, cx = this.W / 2, y = this.H * 0.36, h = code ? 112 : 70;
+    c.fillStyle = 'rgba(6,9,5,.78)';
+    c.fillRect(cx - 250, y, 500, h);
+    c.fillStyle = '#ff8a1f';
+    c.fillRect(cx - 250, y, 4, h);
+    this.text('WAITING FOR PLAYERS', cx, y + 34, '#ffb347', 26, 'center');
+    if (code) {
+      this.text(`ROOM CODE  ${code}`, cx, y + 70, '#f2f2ea', 24, 'center');
+      this.text('Friends type it next to JOIN in the menu  ·  Esc to copy it', cx, y + 96, '#98a889', 13, 'center', false);
+    } else this.text('The match starts when someone joins the other team', cx, y + 56, '#98a889', 14, 'center', false);
+  }
+
   drawScore(M) {
     const c = this.c, cx = this.W / 2, lim = M.limit, s = Math.max(0, Math.ceil(M.left));
     c.fillStyle = 'rgba(6,9,5,.72)';
@@ -273,7 +291,7 @@ export class Hud {
     this.text(M.score.blue, cx - 100, 48, '#4aa3ff', 36, 'center');
     this.text(M.score.red, cx + 100, 48, '#ff5347', 36, 'center');
     this.text(`${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`, cx, 40, s < 30 ? '#ff5347' : '#f2f2ea', 24, 'center');
-    this.text(`TDM · ${lim}`, cx, 56, '#8a9a7b', 11, 'center', false);
+    this.text(M.waiting ? 'WAITING' : `TDM · ${lim}`, cx, 56, M.waiting ? '#ffb347' : '#8a9a7b', 11, 'center', false);
     c.fillStyle = '#1f2b38'; c.fillRect(cx - 158, 60, 110, 3);
     c.fillStyle = '#4aa3ff'; c.fillRect(cx - 158, 60, 110 * Math.min(1, M.score.blue / lim), 3);
     c.fillStyle = '#3a1f1d'; c.fillRect(cx + 48, 60, 110, 3);

@@ -12,7 +12,7 @@
 
 Frontline Ops is a fast, Call of Duty–style shooter. Two teams of five, **Rangers** and **OPFOR**, fight across three maps. The first team to reach the score limit wins. Pick a callsign, choose your gun and its optic, and deploy.
 
-- Play **offline against bots** to practise, or **online with friends**. Bots fill any empty slots, so a match is always full.
+- Play **offline against bots** to practise, or **online with friends**. Online matches are real players only, with no bots.
 - Every soldier is a fully animated human: they run, crouch, aim, reload and fall.
 - Your health comes back if you stay out of the fight for a few seconds.
 - Kill streaks earn rewards, and your results go on a **leaderboard**.
@@ -53,10 +53,10 @@ Your profile is remembered by your browser, so there's nothing to sign up for.
 | Mode | What it is |
 | --- | --- |
 | **Practice** | You and 4 bot teammates against 5 bots. Choose Recruit, Regular or Veteran bots and a score limit of 15, 30 or 50. |
-| **Quick Play** | Join a public online 5v5 match straight away. Bots fill the empty slots and step aside as people join. |
-| **Private room** | Press **Create private room** to get a 5-letter code. Friends type it next to **Join** to play in the same match. |
+| **Quick Play** | Join a public online match straight away, up to 5v5. Real players only: the match starts once someone is on each team. |
+| **Private room** | Press **Create private room** to get a random 5-letter code. It's on your screen while you wait, and in the pause menu (**Esc**) with a **Copy** button. Friends type it next to **Join** to play in the same match. Real players only. |
 
-A match ends when a team reaches the score limit or the 8-minute clock runs out. Online matches then move on to the next map after a short break.
+A match ends when a team reaches the score limit or the 8-minute clock runs out. Online, the clock only runs while both teams have a player. If people leave and one team ends up two or more players bigger, a player from that team moves to the other side. Online matches then move on to the next map after a short break.
 
 ## Maps
 

@@ -34,6 +34,8 @@ browser ──HTTP──> nginx :8080 ──> Django + gunicorn ──> PostgreS
   - Other players are interpolated 100 ms in the past.
   - Hits use lag compensation: targets are rewound up to 0.6 s.
   - A token bucket stops command flooding.
+  - Rooms are players only. The match clock holds (`Match.hold`) until both teams have someone. If leavers make the teams differ by two, the latest player to join the bigger team moves over and respawns.
+  - Private room codes are 5 random characters from `crypto.randomInt`, without look-alikes such as 0/O and 1/I.
 - **Results:** online results go from the game server to Django over the private network, with a shared key. nginx blocks `/api/internal/` from outside. Practice results come from the browser and are plausibility-checked.
 - **Optics:** defined in `server/game/gamedata.py`. They affect the zoom, reticle and gun model; the server validates each player's choice.
 

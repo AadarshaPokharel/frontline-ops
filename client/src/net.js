@@ -69,12 +69,12 @@ export class NetSession {
     this.M = {
       data: this.data, weapons: this.data.weapons, mapDef: P.mapDef, world: P.world, limit: w.limit, timeLimit: this.data.match.timeLimit,
       actors: [], nades: [], strikes: [], pickups: [], score: { blue: 0, red: 0 }, uav: { blue: 0, red: 0 },
-      time: w.time, left: w.left, over: !!w.over, result: null,
+      time: w.time, left: w.left, over: !!w.over, result: null, waiting: !!w.waiting && !w.over,   // waiting: a team has nobody yet
       resultFor(team) { return this.result === 'draw' ? 'draw' : this.result === team ? 'win' : 'loss'; },
     };
     this.wait = w.over ? w.intermission : 0;   // seconds until the next match, when joining between matches
     this.applyRoster(w.roster);
-    if (!w.over) this.events.push({ type: 'start' });
+    if (!w.over && !w.waiting) this.events.push({ type: 'start' });
   }
 
   applyRoster(roster) {
@@ -82,7 +82,7 @@ export class NetSession {
     for (const r of roster) {
       ids.add(r.id);
       this.known.set(r.id, r);
-      if (r.id === this.me.id) continue;
+      if (r.id === this.me.id) { this.me.team = r.team; continue; }   // the server can move you to even the teams
       const a = this.actors.get(r.id);
       if (!a) this.actors.set(r.id, blankActor(r));
       else Object.assign(a, { name: r.name, team: r.team, isBot: r.bot });
@@ -136,6 +136,7 @@ export class NetSession {
     M.score.blue = s.sc[0]; M.score.red = s.sc[1];
     M.uav.blue = s.uv[0]; M.uav.red = s.uv[1];
     M.left = s.lf;
+    M.waiting = !!s.wt;
     M.strikes = s.st.map(unpackStrike);
     M.pickups = s.pk.map(unpackPickup);
     for (const p of s.ac) {

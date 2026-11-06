@@ -199,7 +199,27 @@ function pause() {
   if (state !== 'play') return;
   state = 'paused';
   $('pause-note').textContent = session?.online ? 'The match keeps going while you are away' : '';
+  $('pause-code').textContent = session?.code || '';
+  show('pause-room', !!session?.code);
   show('pause', true);
+}
+
+// Copy the room code to share it. Plain http on a network address has no clipboard API, so fall back to a selection copy.
+async function copyCode() {
+  const code = session?.code, btn = $('copy-code');
+  if (!code) return;
+  let ok = true;
+  try {
+    await navigator.clipboard.writeText(code);
+  } catch {
+    const t = Object.assign(document.createElement('textarea'), { value: code });
+    document.body.append(t);
+    t.select();
+    ok = document.execCommand('copy');
+    t.remove();
+  }
+  btn.textContent = ok ? 'COPIED' : 'COPY FAILED';
+  setTimeout(() => { btn.textContent = 'COPY'; }, 1500);
 }
 
 function resume() {
@@ -233,6 +253,7 @@ addEventListener('resize', () => { view.resize(); hud.resize(); });
 $('gl').addEventListener('click', () => { if (state === 'play') input.lock(); });
 $('resume').onclick = resume;
 $('quit').onclick = toMenu;
+$('copy-code').onclick = copyCode;
 $('again').onclick = () => {
   if (session?.online) { show('end', false); state = 'play'; input.enabled = true; input.lock(); return; }
   practice();
@@ -267,7 +288,7 @@ function frame(now) {
   if (session && state !== 'menu') {
     const message = state !== 'play' ? '' : session.online && session.M.over ? `Next match starts in ${Math.ceil(session.wait)} s`
       : !input.locked && !session.me.dead ? 'Click to play' : '';
-    hud.draw(session.M, view, input.yaw, { message });
+    hud.draw(session.M, view, input.yaw, { message, code: session.code });
   } else hud.clear();
 
   const wantScore = !!session && state === 'play' && !!input.keys.Tab;

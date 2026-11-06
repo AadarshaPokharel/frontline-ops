@@ -46,6 +46,7 @@ export class Match {
     this.uav = { blue: 0, red: 0 };
     this.time = 0;
     this.left = this.timeLimit;
+    this.hold = false;   // online rooms set this while a team has nobody: the clock waits
     this.over = false;
     this.result = null;
     this.nextId = 1;
@@ -424,7 +425,7 @@ export class Match {
   tick(dt = TICK) {
     if (this.over) return;
     this.time += dt;
-    this.left -= dt;
+    if (!this.hold) this.left -= dt;
     for (const a of this.actors) {
       if (a.dead) {
         if ((a.respawn -= dt) <= 0) this.spawn(a);

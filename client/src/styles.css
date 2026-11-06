@@ -60,6 +60,10 @@ button:disabled{opacity:.55;cursor:wait}
 #code{width:92px;text-transform:uppercase;letter-spacing:4px;text-align:center}
 input[type=range]{width:110px;padding:0;accent-color:#ff8a1f}
 output{min-width:28px;color:#dfe6d6}
+.share{margin:16px 0 4px;padding:14px 12px;border:1px solid #3d4a34;background:#141b11}
+.share span{display:block;font-size:12px;letter-spacing:3px;color:#8a9a7b;text-transform:uppercase}
+.share b{display:block;margin:6px 0 12px;font-size:40px;letter-spacing:10px;color:#ffb347;user-select:text}
+.share small{display:block;margin-top:12px;font-size:12px;color:#7d8c6e;letter-spacing:1px}
 #room-code{position:fixed;left:16px;bottom:130px;z-index:2;padding:6px 10px;background:rgba(6,9,5,.7);border:1px solid #3d4a34;
   color:#ffb347;font-size:13px;letter-spacing:3px}
 .help{margin-top:16px;font-size:12px;line-height:1.9;color:#7d8c6e;letter-spacing:1px}

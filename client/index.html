@@ -48,7 +48,7 @@
         </div>
         <button id="deploy" class="big">PRACTICE</button>
 
-        <h2>Multiplayer <small>(5v5, bots fill empty slots)</small></h2>
+        <h2>Multiplayer <small>(up to 5v5, real players only)</small></h2>
         <div class="row mp">
           <button id="quick" class="mid">QUICK PLAY</button>
           <button id="create" class="mid ghosty">CREATE PRIVATE ROOM</button>
@@ -83,6 +83,12 @@
   <div class="panel small">
     <h1>PAUSED</h1>
     <p id="pause-note" class="tag"></p>
+    <div id="pause-room" class="share hidden">
+      <span>Room code</span>
+      <b id="pause-code"></b>
+      <button id="copy-code" class="mid ghosty">COPY</button>
+      <small>Friends type this code next to JOIN in the menu.</small>
+    </div>
     <button id="resume" class="big">RESUME</button>
     <button id="quit" class="ghost">Quit to menu</button>
   </div>

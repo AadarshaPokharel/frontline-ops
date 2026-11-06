@@ -1,0 +1,6 @@
+{
+  "name": "frontline-ops-shared",
+  "private": true,
+  "type": "module",
+  "description": "Game rules shared by the browser client and the Node game server."
+}

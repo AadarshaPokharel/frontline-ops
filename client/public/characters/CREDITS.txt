@@ -1,0 +1,4 @@
+Characters and animations by Quaternius (https://quaternius.com), licensed CC0 1.0 (public domain):
+  soldier_m.glb, soldier_f.glb  <-  Universal Base Characters (Standard)  https://quaternius.itch.io/universal-base-characters
+  animations.glb                <-  Universal Animation Library (Standard) https://quaternius.itch.io/universal-animation-library
+Simplified, recompressed and trimmed to the clips the game uses. Uniforms, helmets and vests are added by the game.

@@ -1,0 +1,8 @@
+**/node_modules
+**/__pycache__
+client/dist
+tools
+server/db.sqlite3
+server/staticfiles
+.env
+assets-src/

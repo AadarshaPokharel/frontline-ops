@@ -1,0 +1,14 @@
+{
+  "name": "frontline-ops-asset-tools",
+  "private": true,
+  "type": "module",
+  "description": "One-off pipeline that downloads the CC0 Poly Haven assets and compresses them for the web client.",
+  "scripts": {
+    "assets": "node build-assets.mjs",
+    "characters": "node build-characters.mjs"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4.5.1",
+    "sharp": "^0.35.5"
+  }
+}

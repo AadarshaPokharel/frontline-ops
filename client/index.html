@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frontline Ops</title>
+<link rel="icon" href="data:,">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<canvas id="hud"></canvas>
+
+<div id="loading" class="overlay">
+  <div class="loader">
+    <h1>FRONTLINE <span>OPS</span></h1>
+    <p id="loading-text">Loading…</p>
+    <div class="bar"><div id="loading-bar"></div></div>
+  </div>
+</div>
+
+<div id="menu" class="overlay hidden">
+  <div class="panel wide">
+    <header>
+      <h1>FRONTLINE <span>OPS</span></h1>
+      <p class="tag">First-person team deathmatch · no login, just deploy</p>
+    </header>
+    <div class="cols">
+      <section>
+        <h2>Select Map</h2>
+        <div class="row" id="maps"></div>
+        <h2>Primary Weapon <small>(sidearm: M1911)</small></h2>
+        <div class="row" id="weapons"></div>
+        <div class="row opts optic-row">
+          <label>Optic <select id="optic"></select></label>
+          <span id="optic-desc" class="desc"></span>
+        </div>
+        <div class="row opts">
+          <label>Callsign <input id="name" maxlength="12" value="Ghost" autocomplete="off" spellcheck="false"></label>
+          <label>Sensitivity <input id="sens" type="range" min="0.5" max="5" step="0.1"> <output id="sens-v"></output></label>
+          <label>FOV <input id="fov" type="range" min="65" max="100" step="1"> <output id="fov-v"></output></label>
+          <label class="chk"><input type="checkbox" id="hq" checked> High quality</label>
+        </div>
+
+        <h2>Practice vs bots</h2>
+        <div class="row opts">
+          <label>Difficulty <select id="diff"></select></label>
+          <label>Score limit <select id="limit"></select></label>
+        </div>
+        <button id="deploy" class="big">PRACTICE</button>
+
+        <h2>Multiplayer <small>(5v5, bots fill empty slots)</small></h2>
+        <div class="row mp">
+          <button id="quick" class="mid">QUICK PLAY</button>
+          <button id="create" class="mid ghosty">CREATE PRIVATE ROOM</button>
+          <span class="join"><input id="code" maxlength="6" placeholder="CODE" autocomplete="off" spellcheck="false"><button id="join" class="mid ghosty">JOIN</button></span>
+        </div>
+        <p id="menu-error" class="error hidden"></p>
+        <div class="help">
+          <b>WASD</b> move &nbsp; <b>Mouse</b> look &nbsp; <b>LMB</b> fire &nbsp; <b>RMB</b> aim down sights &nbsp; <b>Space</b> jump &nbsp; <b>C</b> crouch &nbsp;
+          <b>Shift</b> sprint &nbsp; <b>R</b> reload &nbsp; <b>1/2/Q/Wheel</b> weapon &nbsp; <b>G</b> frag &nbsp; <b>V</b> knife &nbsp; <b>Tab</b> scores &nbsp; <b>Esc</b> pause<br>
+          Killstreaks: <b>3</b> UAV · <b>5</b> Care Package · <b>7</b> Airstrike
+        </div>
+      </section>
+      <aside>
+        <h2>Your Record</h2>
+        <div id="record" class="record">Play a match to start your record.</div>
+        <h2>Leaderboard</h2>
+        <div class="row filters">
+          <select id="lb-map"></select>
+          <select id="lb-period">
+            <option value="all">All time</option>
+            <option value="week">This week</option>
+            <option value="day">Today</option>
+          </select>
+        </div>
+        <div id="leaderboard" class="lb">Loading…</div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<div id="pause" class="overlay hidden">
+  <div class="panel small">
+    <h1>PAUSED</h1>
+    <p id="pause-note" class="tag"></p>
+    <button id="resume" class="big">RESUME</button>
+    <button id="quit" class="ghost">Quit to menu</button>
+  </div>
+</div>
+
+<div id="end" class="overlay hidden">
+  <div class="panel">
+    <h1 id="result">VICTORY</h1>
+    <p id="save-status" class="tag"></p>
+    <div id="finalscore"></div>
+    <button id="again" class="big">PLAY AGAIN</button>
+    <button id="tomenu" class="ghost">Main menu</button>
+  </div>
+</div>
+
+<div id="room-code" class="hidden"></div>
+<div id="score" class="hidden"></div>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+All models and textures in this folder come from Poly Haven (https://polyhaven.com)
+and are licensed CC0 1.0 (public domain). They were resized and recompressed for the web.
+
+models/crate.glb  <-  wooden_military_crate  https://polyhaven.com/a/wooden_military_crate
+models/ammo.glb  <-  ammo_box  https://polyhaven.com/a/ammo_box
+models/barrel.glb  <-  Barrel_01  https://polyhaven.com/a/Barrel_01
+models/barrier.glb  <-  concrete_road_barrier  https://polyhaven.com/a/concrete_road_barrier
+models/jerrycan.glb  <-  metal_jerrycan_green  https://polyhaven.com/a/metal_jerrycan_green
+textures/concrete_*.webp  <-  concrete_floor_02  https://polyhaven.com/a/concrete_floor_02
+textures/iron_*.webp  <-  corrugated_iron_02  https://polyhaven.com/a/corrugated_iron_02
+textures/sand_*.webp  <-  aerial_sand  https://polyhaven.com/a/aerial_sand
+textures/sandstone_*.webp  <-  sandstone_blocks_08  https://polyhaven.com/a/sandstone_blocks_08
+textures/asphalt_*.webp  <-  asphalt_02  https://polyhaven.com/a/asphalt_02
+textures/brick_*.webp  <-  brick_wall_001  https://polyhaven.com/a/brick_wall_001

@@ -1,0 +1,12 @@
+{
+  "name": "frontline-ops-gameserver",
+  "private": true,
+  "type": "module",
+  "description": "Authoritative real-time match server. Runs the same rules as the browser (../shared).",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

@@ -2,11 +2,9 @@
 
 **A first-person team deathmatch shooter you play right in your browser. No download, no account, no login.**
 
-<video src="docs/media/frontline-ops-trailer.mp4" poster="docs/media/poster.jpg" controls width="100%"></video>
+![Frontline Ops trailer: the menu, then fights in the Warehouse, Desert Compound and Urban Ruins](docs/media/frontline-ops-trailer.webp)
 
-![Frontline Ops gameplay](docs/media/frontline-ops-preview.gif)
-
-▶ **[Watch the intro and gameplay video](docs/media/frontline-ops-trailer.mp4)** (50 seconds)
+<sub>The 49-second trailer above plays by itself and has no sound. A sharper copy: [frontline-ops-trailer.mp4](docs/media/frontline-ops-trailer.mp4).</sub>
 
 ---
 
@@ -19,6 +17,23 @@ Frontline Ops is a fast, Call of Duty–style shooter. Two teams of five, **Rang
 - Your health comes back if you stay out of the fight for a few seconds.
 - Kill streaks earn rewards, and your results go on a **leaderboard**.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td valign="top" width="50%"><img src="docs/media/screenshots/firefight.jpg" alt="Rangers and OPFOR soldiers trading fire in the Warehouse" width="100%"><br><b>Warehouse firefight.</b> Both teams trade fire between the crate stacks.</td>
+    <td valign="top" width="50%"><img src="docs/media/screenshots/holo-sight.jpg" alt="Aiming down a holographic sight at an enemy" width="100%"><br><b>Holographic sight.</b> Aiming down the M4A1's sight at an enemy who is firing back.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/media/screenshots/sniper-scope.jpg" alt="Looking through the 8x sniper scope in Desert Compound" width="100%"><br><b>Sniper Scope 8x.</b> Watching a lane in Desert Compound with the Intervention.</td>
+    <td valign="top"><img src="docs/media/screenshots/acog-scope.jpg" alt="An enemy seen through the ACOG scope in Urban Ruins" width="100%"><br><b>ACOG 4x.</b> The RPD's ACOG on an enemy in Urban Ruins. The red arc shows where the shots are coming from.</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/media/screenshots/airstrike.jpg" alt="A jet's bombs exploding among enemies in Urban Ruins" width="100%"><br><b>Airstrike.</b> The 7-kill streak reward: a jet bombs the enemy team.</td>
+    <td valign="top"><img src="docs/media/screenshots/soldier.jpg" alt="A teammate in camouflage and helmet aiming beside the player" width="100%"><br><b>Animated soldiers.</b> A teammate pushes up beside you.</td>
+  </tr>
+</table>
+
 ## Getting started
 
 1. Open the game in an up-to-date **Chrome, Edge or Firefox**. If you're hosting it yourself, run `docker compose up -d --build` and go to **http://localhost:8080**.
@@ -28,6 +43,10 @@ Frontline Ops is a fast, Call of Duty–style shooter. Two teams of five, **Rang
 5. Click inside the game to take control of the mouse. Press **Esc** at any time to pause or leave.
 
 Your profile is remembered by your browser, so there's nothing to sign up for.
+
+<img src="docs/media/screenshots/menu.jpg" alt="The menu: maps, guns, optic, callsign, Practice and Multiplayer" width="640">
+
+<sub>The menu: pick a map, a gun and its optic, then press <b>Practice</b> or choose an online mode under <b>Multiplayer</b>.</sub>
 
 ## Game modes
 

@@ -45,7 +45,7 @@ server/          Django: game/gamedata.py (maps, weapons, optics), game/views.py
 proxy/           nginx config
 tools/           asset pipelines (download, simplify and compress the CC0 assets)
 assets-src/      downloaded Quaternius zips (not shipped)
-docs/media/      trailer video and preview
+docs/media/      trailer (animated WebP for the README, MP4) and screenshots
 ```
 
 ## API
